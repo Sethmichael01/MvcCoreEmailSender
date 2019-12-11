@@ -23,8 +23,8 @@ namespace WebApp.Controllers
         {
             return View();
         }
-
-        public async Task<IActionResult> Mail(string id)
+        [HttpPost]
+        public async Task<IActionResult> Mail(string email)
         {
             var callbackUrl = Url.Link("Default", new { Controller = "Home", Action = "Index"});
             var htmlMessage = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"//www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" +
@@ -37,7 +37,7 @@ namespace WebApp.Controllers
                 "    <meta name=\"x-apple-disable-message-reformatting\" />  <!-- Disable auto-scale in iOS 10 Mail entirely -->" +
                 $"</head><body><h1>Titulo</h1><a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Ver los detalles</a></body></html>";
 
-            await _emailSender.SendEmailAsync(id, "Subjet", htmlMessage);
+            await _emailSender.SendEmailAsync(email, "Subjet", htmlMessage);
 
             return Content("Enviado");
         }
